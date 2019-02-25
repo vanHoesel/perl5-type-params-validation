@@ -2,6 +2,8 @@ use Test::Most;
 
 BEGIN { use Type::Params::Validation qw/compile_named/ };
 
+use Types::Standard qw/Str/;
+
 subtest 'positives empty' => sub {
     my $check = compile_named();
     
