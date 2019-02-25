@@ -42,6 +42,11 @@ subtest 'positives simple' => sub {
         "... and returns the expected value"
     );
     
+    $args = $check->( sort_code => '98-76-54' );
+    is( $args->{sort_code}, '98-76-54',
+        "... and returns another expected value"
+    );
+    
 };
 
 done_testing();
