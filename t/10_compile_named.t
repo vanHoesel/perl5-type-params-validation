@@ -2,7 +2,7 @@ use Test::Most;
 
 BEGIN { use Type::Params::Validation qw/compile_named/ };
 
-use Types::Standard qw/Str/;
+use Types::Standard qw/Str ArrayRef Num/;
 
 subtest 'positives empty' => sub {
     my $check = compile_named();
@@ -45,6 +45,27 @@ subtest 'positives simple' => sub {
     $args = $check->( sort_code => '98-76-54' );
     is( $args->{sort_code}, '98-76-54',
         "... and returns another expected value"
+    );
+    
+};
+
+subtest 'negative simple' => sub {
+    my $check = compile_named( monies => ArrayRef[Num] );
+    
+    is( ref($check) , 'CODE',
+        "Returns a 'CodeRef'"
+    );
+    
+    my $args;
+    lives_ok{
+        $args = $check->( monies => [12.34, 56,78] )
+    } "... and does run without problems";
+    
+    cmp_deeply( $args =>
+        {
+            monies => [ 12.34, 56,78 ]
+        },
+        "... and has some numbers"
     );
     
 };
