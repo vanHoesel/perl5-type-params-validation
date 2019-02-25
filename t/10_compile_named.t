@@ -9,9 +9,14 @@ subtest 'positives empty' => sub {
         "Returns a 'CodeRef'"
     );
     
+    my $args;
     lives_ok{
-        $check->()
+        $args = $check->()
     } "... and does run without problems";
+    
+    is( ref($args) , 'HASH',
+        "... which returns a HASH ref"
+    );
     
 };
 
