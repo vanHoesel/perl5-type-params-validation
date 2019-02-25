@@ -20,4 +20,13 @@ subtest 'positives empty' => sub {
     
 };
 
+subtest 'positives simple' => sub {
+    my $check = compile_named( sort_code => Str );
+    
+    is( ref($check) , 'CODE',
+        "Returns a 'CodeRef'"
+    );
+    
+};
+
 done_testing();
