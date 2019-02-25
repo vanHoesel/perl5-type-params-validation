@@ -8,6 +8,11 @@ subtest 'positives empty' => sub {
     is( ref($check) , 'CODE',
         "Returns a 'CodeRef'"
     );
+    
+    lives_ok{
+        $check->()
+    } "... and does run without problems";
+    
 };
 
 done_testing();
