@@ -68,6 +68,10 @@ subtest 'negative simple' => sub {
         "... and has some numbers"
     );
     
+    dies_ok{
+        $args = $check->( monies => ["abc"] )
+    } "... dies when passing bad values";
+    
 };
 
 done_testing();
