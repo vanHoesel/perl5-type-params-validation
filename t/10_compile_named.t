@@ -29,6 +29,19 @@ subtest 'positives simple' => sub {
         "Returns a 'CodeRef'"
     );
     
+    my $args;
+    lives_ok{
+        $args = $check->( sort_code => '12-34-56' )
+    } "... and does run without problems";
+    
+    is( ref($args) , 'HASH',
+        "... which returns a HASH ref"
+    );
+    
+    is( $args->{sort_code}, '12-34-56',
+        "... and returns the expected value"
+    );
+    
 };
 
 done_testing();
