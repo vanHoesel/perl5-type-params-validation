@@ -17,21 +17,48 @@ sub compile_named {
     return sub {
         my @params = @_;
         
-        try {
-            return $check->(@params);
-        } catch {
-            my $error = $_;
-            my $varname = $error->varname();
-            $varname =~ s/^\$_\{"//;
-            $varname =~ s/"\}$//;
-            require Error::TypeTiny::Validation;
-            Error::TypeTiny::Validation->throw(
-                message => 'One or more exceptions have occurred',
-                errors  => { $varname => $error },
-            );
+        my $args = try {
+            $check->(@params);
         };
+        return $args if defined $args;
+        
+        my %params = @params; # original params
+        my %checks = _split_compile(@checks);
+        
+        my %errors;
+        foreach my $check_param ( keys %checks ) {
+            
+            my $check_value = $params{$check_param};
+            my $check_check = $checks{$check_param};
+            
+            try {
+                my $value = $check_check->($check_param => $check_value);
+                # seems to be all fine
+            } catch {
+                $errors{$check_param} = $_;
+            };
+        }
+        
+        require Error::TypeTiny::Validation;
+        Error::TypeTiny::Validation->throw(
+            message => 'One or more exceptions have occurred',
+            errors  => { %errors },
+        );
     }
     
 }
 
+sub _split_compile {
+    my @checks = @_;
+    
+    my %checks;
+    while ( @checks ) {
+        my $param = shift @checks;
+        my $check = shift @checks;
+        my $check_check = Type::Params::compile_named( $param => $check );
+        $checks{$param} = $check_check;
+    }
+    
+    return %checks
+}
 1;
