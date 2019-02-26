@@ -96,6 +96,10 @@ subtest 'error_typetiny_validation' => sub {
         "... and has errors"
     );
     
+    is( ref($exception->errors), 'HASH',
+        "... which is an HASH reference"
+    );
+    
 };
 
 done_testing();
