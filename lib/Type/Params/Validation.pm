@@ -21,10 +21,13 @@ sub compile_named {
             return $check->(@params);
         } catch {
             my $error = $_;
+            my $varname = $error->varname();
+            $varname =~ s/^\$_\{"//;
+            $varname =~ s/"\}$//;
             require Error::TypeTiny::Validation;
             Error::TypeTiny::Validation->throw(
                 message => 'One or more exceptions have occurred',
-                errors  => { 'account_number' => $error },
+                errors  => { $varname => $error },
             );
         };
     }
