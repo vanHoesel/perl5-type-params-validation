@@ -72,6 +72,8 @@ subtest 'negative simple' => sub {
         $args = $check->( monies => ["abc"] )
     } "... dies when passing bad values";
     
+    isa_ok( $@, 'Error::TypeTiny' );
+    
 };
 
 done_testing();
