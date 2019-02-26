@@ -129,4 +129,32 @@ subtest 'error_typetiny_validation' => sub {
     
 };
 
+subtest 'multiple constraint errors' => sub {
+    my $check = compile_named(
+        sort_code      => Str,
+        account_number => Num,
+        monies         => ArrayRef[Num],
+    );
+    
+    throws_ok{
+        $check->(
+            sort_code      => undef,
+            account_number => 'abc',
+            monies         => [1, 2]
+        );
+    } qr/One or more exceptions have occurred/,
+    "Throws exception";
+    
+    my $errors = $@->errors;
+    
+    cmp_deeply( $errors =>
+        {
+            sort_code      => isa('Error::TypeTiny::Assertion'),
+            account_number => isa('Error::TypeTiny::Assertion')
+        },
+        "... and contains multiple Error::TypeTiny exceptions"
+    );
+    
+};
+
 done_testing();
