@@ -85,6 +85,7 @@ subtest 'error_typetiny_validation' => sub {
     } "... dies when passing bad values";
     
     isa_ok( $@, 'Error::TypeTiny::Validation' );
+    my $exception = $@;
     
     like( $@->message, qr/One or more exceptions have occurred/,
         "... And has a message about 'One or more exceptions'"
