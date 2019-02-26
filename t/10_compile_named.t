@@ -109,6 +109,10 @@ subtest 'error_typetiny_validation' => sub {
         "... and has 'Error::TypeTiny' for parameter"
     );
     
+    like( $errors->{account_number}->message, qr/123.456.789/,
+        "... and has a useful message"
+    );
+    
 };
 
 done_testing();
