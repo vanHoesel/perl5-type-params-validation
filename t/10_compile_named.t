@@ -100,6 +100,15 @@ subtest 'error_typetiny_validation' => sub {
         "... which is an HASH reference"
     );
     
+    my $errors = $exception->errors();
+    
+    cmp_deeply( $errors =>
+        {
+            account_number => isa('Error::TypeTiny'),
+        },
+        "... and has 'Error::TypeTiny' for parameter"
+    );
+    
 };
 
 done_testing();
