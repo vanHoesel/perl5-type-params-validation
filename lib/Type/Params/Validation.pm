@@ -21,7 +21,9 @@ sub compile_named {
             return $check->(@params);
         } catch {
             require Error::TypeTiny::Validation;
-            Error::TypeTiny::Validation->throw( );
+            Error::TypeTiny::Validation->throw(
+                message => 'One or more exceptions have occurred',
+            );
         };
     }
     
