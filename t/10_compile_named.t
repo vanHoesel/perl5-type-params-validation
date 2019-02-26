@@ -76,4 +76,57 @@ subtest 'negative simple' => sub {
     
 };
 
+subtest 'error_typetiny_validation' => sub {
+    my $check = compile_named( account_number => Num );
+    
+    my $args;
+    dies_ok{
+        $args = $check->( account_number => '123.456.789' )
+    } "... dies when passing bad values";
+    
+    my $exception = $@;
+    
+    isa_ok( $exception, 'Error::TypeTiny::Validation' );
+    
+    like( $exception->message, qr/One or more exceptions have occurred/,
+        "... And has a message about 'One or more exceptions'"
+    );
+    
+    ok( $exception->errors,
+        "... and has errors"
+    );
+    
+    is( ref($exception->errors), 'HASH',
+        "... which is an HASH reference"
+    );
+    
+    my $errors = $exception->errors();
+    
+    cmp_deeply( $errors =>
+        {
+            account_number => isa('Error::TypeTiny'),
+        },
+        "... and has 'Error::TypeTiny' for parameter"
+    );
+    
+    like( $errors->{account_number}->message, qr/123.456.789/,
+        "... and has a useful message"
+    );
+    
+    my $other = compile_named( sort_code => Num );
+    throws_ok{
+        $args = $other->( sort_code => '12-34-56' )
+    } qr/One or more exceptions have occurred/,
+    "Throws exception with correct stringification";
+    
+    $errors = $@->errors;
+    cmp_deeply( $errors =>
+        {
+            sort_code => isa('Error::TypeTiny'),
+        },
+        "... and it is for another parameter"
+    );
+    
+};
+
 done_testing();
