@@ -113,6 +113,20 @@ subtest 'error_typetiny_validation' => sub {
         "... and has a useful message"
     );
     
+    my $other = compile_named( sort_code => Num );
+    throws_ok{
+        $args = $other->( sort_code => '12-34-56' )
+    } qr/One or more exceptions have occurred/,
+    "Throws exception with correct stringification";
+    
+    $errors = $@->errors;
+    cmp_deeply( $errors =>
+        {
+            sort_code => isa('Error::TypeTiny'),
+        },
+        "... and it is for another parameter"
+    );
+    
 };
 
 done_testing();
