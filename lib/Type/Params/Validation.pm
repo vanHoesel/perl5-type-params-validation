@@ -20,9 +20,11 @@ sub compile_named {
         try {
             return $check->(@params);
         } catch {
+            my $error = $_;
             require Error::TypeTiny::Validation;
             Error::TypeTiny::Validation->throw(
                 message => 'One or more exceptions have occurred',
+                errors  => { 'account_number' => $error },
             );
         };
     }
