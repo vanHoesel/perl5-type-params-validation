@@ -86,6 +86,10 @@ subtest 'error_typetiny_validation' => sub {
     
     isa_ok( $@, 'Error::TypeTiny::Validation' );
     
+    like( $@->message, qr/One or more exceptions have occurred/,
+        "... And has a message about 'One or more exceptions'"
+    );
+    
 };
 
 done_testing();
