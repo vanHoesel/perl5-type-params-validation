@@ -92,6 +92,10 @@ subtest 'error_typetiny_validation' => sub {
         "... And has a message about 'One or more exceptions'"
     );
     
+    ok( $exception->errors,
+        "... and has errors"
+    );
+    
 };
 
 done_testing();
