@@ -76,4 +76,16 @@ subtest 'negative simple' => sub {
     
 };
 
+subtest 'error_typetiny_validation' => sub {
+    my $check = compile_named( account_number => Num );
+    
+    my $args;
+    dies_ok{
+        $args = $check->( account_number => '123.456.789' )
+    } "... dies when passing bad values";
+    
+    isa_ok( $@, 'Error::TypeTiny::Validation' );
+    
+};
+
 done_testing();
