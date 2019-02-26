@@ -84,10 +84,11 @@ subtest 'error_typetiny_validation' => sub {
         $args = $check->( account_number => '123.456.789' )
     } "... dies when passing bad values";
     
-    isa_ok( $@, 'Error::TypeTiny::Validation' );
     my $exception = $@;
     
-    like( $@->message, qr/One or more exceptions have occurred/,
+    isa_ok( $exception, 'Error::TypeTiny::Validation' );
+    
+    like( $exception->message, qr/One or more exceptions have occurred/,
         "... And has a message about 'One or more exceptions'"
     );
     
