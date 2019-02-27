@@ -174,6 +174,10 @@ subtest 'missing required parameters' => sub {
         "... and contains Error::TypeTiny::MissingRequired exception"
     );
     
+    like( $errors->{sort_code}->message, qr/Missing .* sort_code/i,
+        "... and has a nice 'missing' message"
+    );
+    
 };
 
 done_testing();
