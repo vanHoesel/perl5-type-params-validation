@@ -180,7 +180,7 @@ subtest 'missing required parameters' => sub {
     
 };
 
-subtest 'unrecognised parameters' => sub {
+subtest 'unrecognized parameters' => sub {
     my $check = compile_named( );
     
     throws_ok{
