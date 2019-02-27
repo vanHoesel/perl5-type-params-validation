@@ -157,4 +157,27 @@ subtest 'multiple constraint errors' => sub {
     
 };
 
+subtest 'missing required parameters' => sub {
+    my $check = compile_named( sort_code => Str );
+    
+    throws_ok{
+        $check->( );
+    } qr/One or more exceptions have occurred/,
+    "Throws exception";
+    
+    my $errors = $@->errors;
+    
+    cmp_deeply( $errors =>
+        {
+            sort_code      => isa('Error::TypeTiny::MissingRequired'),
+        },
+        "... and contains Error::TypeTiny::MissingRequired exception"
+    );
+    
+    like( $errors->{sort_code}->message, qr/Missing .* sort_code/i,
+        "... and has a nice 'missing' message"
+    );
+    
+};
+
 done_testing();
