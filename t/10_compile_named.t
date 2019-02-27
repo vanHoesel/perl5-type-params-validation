@@ -165,6 +165,15 @@ subtest 'missing required parameters' => sub {
     } qr/One or more exceptions have occurred/,
     "Throws exception";
     
+    my $errors = $@->errors;
+    
+    cmp_deeply( $errors =>
+        {
+            sort_code      => isa('Error::TypeTiny::MissingRequired'),
+        },
+        "... and contains Error::TypeTiny::MissingRequired exception"
+    );
+    
 };
 
 done_testing();
