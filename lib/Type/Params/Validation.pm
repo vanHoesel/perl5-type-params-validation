@@ -50,6 +50,8 @@ sub compile_named {
                 }
                 $errors{$check_param} = $error;
             };
+            
+            delete $params{$check_param};
         }
         
         require Error::TypeTiny::Validation;
