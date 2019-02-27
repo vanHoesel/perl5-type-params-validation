@@ -157,4 +157,14 @@ subtest 'multiple constraint errors' => sub {
     
 };
 
+subtest 'missing required parameters' => sub {
+    my $check = compile_named( sort_code => Str );
+    
+    throws_ok{
+        $check->( );
+    } qr/One or more exceptions have occurred/,
+    "Throws exception";
+    
+};
+
 done_testing();
