@@ -42,7 +42,9 @@ sub compile_named {
                 my $error;
                 if ( $exception->message =~ /missing/i ) {
                     require Error::TypeTiny::MissingRequired;
-                    $error = Error::TypeTiny::MissingRequired->new( );
+                    $error = Error::TypeTiny::MissingRequired->new(
+                        named_param => $check_param,
+                    );
                 } else {
                     $error = $exception;
                 }
