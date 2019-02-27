@@ -184,9 +184,18 @@ subtest 'unrecognized parameters' => sub {
     my $check = compile_named( );
     
     throws_ok{
-        $check->( foo => 1, bar => 2 )
+        $check->( foo => 1 )
     } qr/One or more exceptions have occurred/,
     "Throws exception";
+    
+    my $errors = $@->errors;
+    
+    cmp_deeply( $errors =>
+        {
+            foo => isa('Error::TypeTiny::UnrecognizedParameter'),
+        },
+        "... and contains Error::TypeTiny::UnrecognizedParameter exception"
+    );
     
 };
 
