@@ -180,4 +180,14 @@ subtest 'missing required parameters' => sub {
     
 };
 
+subtest 'unrecognised parameters' => sub {
+    my $check = compile_named( );
+    
+    throws_ok{
+        $check->( foo => 1, bar => 2 )
+    } qr/One or more exceptions have occurred/,
+    "Throws exception";
+    
+};
+
 done_testing();
