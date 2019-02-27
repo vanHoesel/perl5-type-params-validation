@@ -32,7 +32,10 @@ sub compile_named {
             my $check_check = $checks{$check_param};
             
             try {
-                my $value = $check_check->($check_param => $check_value);
+                my $value = $check_check->(
+                    exists( $params{$check_param} ) ?
+                    ( $check_param => $check_value ) : ()
+                );
                 # seems to be all fine
             } catch {
                 $errors{$check_param} = $_;
