@@ -54,6 +54,14 @@ sub compile_named {
             delete $params{$check_param};
         }
         
+        foreach my $check_param ( keys %params ) {
+            require Error::TypeTiny::UnrecognizedParameter;
+            my $error = Error::TypeTiny::UnrecognizedParameter->new(
+                named_param => $check_param,
+            );
+            $errors{$check_param} = $error;
+        }
+        
         require Error::TypeTiny::Validation;
         Error::TypeTiny::Validation->throw(
             message => 'One or more exceptions have occurred',
