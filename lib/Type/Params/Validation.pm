@@ -38,7 +38,15 @@ sub compile_named {
                 );
                 # seems to be all fine
             } catch {
-                $errors{$check_param} = $_;
+                my $exception = $_;
+                my $error;
+                if ( $exception->message =~ /missing/i ) {
+                    require Error::TypeTiny::MissingRequired;
+                    $error = Error::TypeTiny::MissingRequired->new( );
+                } else {
+                    $error = $exception;
+                }
+                $errors{$check_param} = $error;
             };
         }
         
