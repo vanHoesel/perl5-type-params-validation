@@ -50,6 +50,16 @@ sub compile_named {
                 }
                 $errors{$check_param} = $error;
             };
+            
+            delete $params{$check_param};
+        }
+        
+        foreach my $check_param ( keys %params ) {
+            require Error::TypeTiny::UnrecognizedParameter;
+            my $error = Error::TypeTiny::UnrecognizedParameter->new(
+                named_param => $check_param,
+            );
+            $errors{$check_param} = $error;
         }
         
         require Error::TypeTiny::Validation;
