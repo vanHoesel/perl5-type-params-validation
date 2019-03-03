@@ -64,7 +64,6 @@ sub compile_named {
         
         require Error::TypeTiny::Validation;
         Error::TypeTiny::Validation->throw(
-            message => 'One or more exceptions have occurred',
             errors  => { %errors },
         );
     }
