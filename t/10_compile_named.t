@@ -214,6 +214,24 @@ subtest 'accept hashref as params to check' => sub {
         "... and accepts params as a hashref too"
     );
     
+    throws_ok{
+        $check->( {foo => undef, baz => 5 } )
+    } qr/One or more exceptions have occurred/,
+    "Throws exception for a hashref that";
+    
+    my $errors = $@->errors;
+    
+    cmp_deeply( $errors =>
+        {
+            foo => isa('Error::TypeTiny::Assertion'),
+            bar => isa('Error::TypeTiny::MissingRequired'),
+            baz => isa('Error::TypeTiny::UnrecognizedParameter'),
+        },
+        "... and contains multiple exceptions"
+    );
+    # this would otherwise be an error, missing 'foo' and 'bar' and:
+    # message       "Unrecognized parameter: HASH(0x7f9b3390a2c8)"
+    
 };
 
 done_testing();
