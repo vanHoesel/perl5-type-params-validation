@@ -22,7 +22,12 @@ sub compile_named {
         };
         return $args if defined $args;
         
-        my %params = @params; # original params
+        my %params =
+            scalar @params == 1 && ref($params[0]) eq "HASH" ?
+                %{ $params[0] }
+            :
+                @params
+        ; # original params
         my %checks = _split_compile(@checks);
         
         my %errors;
