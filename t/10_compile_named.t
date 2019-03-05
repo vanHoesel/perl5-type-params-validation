@@ -199,4 +199,21 @@ subtest 'unrecognized parameters' => sub {
     
 };
 
+subtest 'accept hashref as params to check' => sub {
+    my $check = compile_named( foo => Num, bar => Num );
+    
+    cmp_deeply(
+        $check->(  foo => 3, bar => 5  ) =>
+        { foo => 3, bar => 5, },
+        "Accepts params as a hash"
+    );
+    
+    cmp_deeply(
+        $check->( {foo => 3, bar => 5} ) =>
+        { foo => 3, bar => 5, },
+        "... and accepts params as a hashref too"
+    );
+    
+};
+
 done_testing();
