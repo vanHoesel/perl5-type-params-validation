@@ -110,4 +110,11 @@ sub _split_compile {
     
     return %checks
 }
+
+=head1 SEE ALSO
+
+L<Type::Params>
+
+=cut
+
 1;
