@@ -4,6 +4,22 @@ package Type::Params::Validation;
 
 Type::Params::Validation - Type::Params-like validation reporting all errors
 
+=head1 DESCRIPTION
+
+This module will give the L<Type::Params> nice features to validate the
+paramters passed into a subroutine, but on top if that will throw a
+C<Error::TypeTine::Validation> exception that will report all C<errors>.
+
+There are several ways to check the parameters passed into your subroutines. And
+there are several very useful modules already available.
+
+L<Type::Params> is desigend to be used with L<Type::Tiny> and has a very clean
+and short syntax. But it's key-feautre of being fast means it also bails out
+on the first validation error.
+
+Other modules - that can report on every failure in the passed paramtersdo - do
+have verbose syntax and or offer complicated conditionals.
+
 =cut
 
 use strict;
