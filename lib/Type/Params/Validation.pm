@@ -115,6 +115,10 @@ sub _split_compile {
 
 L<Type::Params>
 
+=head1 AUTHOR
+
+Theo van Hoesel E<lt>Th.J.v.Hoesel@gmail.comE<gt>.
+
 =cut
 
 1;
