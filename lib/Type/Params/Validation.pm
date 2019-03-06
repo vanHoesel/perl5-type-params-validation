@@ -119,6 +119,18 @@ L<Type::Params>
 
 Theo van Hoesel E<lt>Th.J.v.Hoesel@gmail.comE<gt>.
 
+=head1 CREDITS
+
+=head1 AUTHOR
+
+Toby Inkster E<lt>tobyink@cpan.orgE<gt>.
+
+=over
+
+=item for nurturing Type::Tiny and Type::Params
+
+=back
+
 =cut
 
 1;
