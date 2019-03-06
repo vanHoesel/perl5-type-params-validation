@@ -1,5 +1,11 @@
 package Type::Params::Validation;
 
+=head1 NAME
+
+Type::Params::Validation - Type::Params-like validation reporting all errors
+
+=cut
+
 use strict;
 use warnings;
 
